@@ -77,16 +77,16 @@ const Login: React.FC = () => {
                 htmlFor="username"
                 className="block text-sm font-medium text-medical-darkgray mb-2"
               >
-                Username
+                Email
               </label>
               <input
                 id="username"
-                type="text"
+                type="email"
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-green focus:border-medical-green transition-colors"
-                placeholder="Enter your username"
+                placeholder="Enter your email"
               />
             </div>
 
@@ -143,8 +143,8 @@ const Login: React.FC = () => {
             Demo Accounts Available
           </p>
           <div className="text-xs text-green-700 space-y-1">
-            <p><strong>Admin:</strong> username: admin, password: admin123</p>
-            <p><strong>Super Admin:</strong> username: superadmin, password: superadmin123</p>
+            <p><strong>Admin:</strong> admin@meditrack.com / admin123</p>
+            <p><strong>Super Admin:</strong> superadmin@meditrack.com / superadmin123</p>
           </div>
         </div>
       </div>
