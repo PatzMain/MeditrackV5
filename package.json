@@ -11,9 +11,5 @@
   "devDependencies": {
     "concurrently": "^7.6.0",
     "@vercel/node": "^3.0.0"
-  },
-  "workspaces": [
-    "frontend",
-    "backend"
-  ]
+  }
 }
