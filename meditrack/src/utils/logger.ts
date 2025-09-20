@@ -2,11 +2,11 @@ import { supabase } from './supabase';
 
 interface LogData {
   action: string;
-  entity_type?: string;
-  entity_id?: string;
-  details?: Record<string, any>;
-  ip_address?: string;
-  user_agent?: string;
+  entity_type?: string | null;
+  entity_id?: string | null;
+  details?: Record<string, any> | null;
+  ip_address?: string | null;
+  user_agent?: string | null;
 }
 
 export class Logger {
@@ -54,7 +54,7 @@ export class Logger {
     await this.log({
       action: 'user_logout',
       entity_type: 'user',
-      entity_id: userId || null,
+      entity_id: userId,
       details: {
         logout_method: 'manual',
         timestamp: new Date().toISOString(),
