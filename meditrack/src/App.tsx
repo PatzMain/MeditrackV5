@@ -64,7 +64,7 @@ function App() {
             <Route
               path="/logs"
               element={
-                <ProtectedRoute requiredRole={['admin']}>
+                <ProtectedRoute requiredRole={['admin', 'superadmin']}>
                   <Layout>
                     <Logs />
                   </Layout>

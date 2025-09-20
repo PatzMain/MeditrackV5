@@ -20,7 +20,7 @@ export const setupDemoUsers = async () => {
       password: 'superadmin123',
       userData: {
         full_name: 'Demo Super Administrator',
-        role: 'admin',
+        role: 'superadmin',
         department: 'IT Department',
         phone: '+1-555-0102'
       }
@@ -90,7 +90,7 @@ WHERE email = 'admin@meditrack.com';
 
 UPDATE profiles SET
   full_name = 'Demo Super Administrator',
-  role = 'admin',
+  role = 'superadmin',
   department = 'IT Department',
   phone = '+1-555-0102'
 WHERE email = 'superadmin@meditrack.com';
