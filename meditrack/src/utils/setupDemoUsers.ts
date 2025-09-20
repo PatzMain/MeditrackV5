@@ -31,11 +31,14 @@ export const setupDemoUsers = async () => {
 
   for (const user of demoUsers) {
     try {
-      // Create auth user
+      // Create auth user with confirmed email
       const { data: authData, error: authError } = await supabase.auth.admin.createUser({
         email: user.email,
         password: user.password,
-        email_confirm: true
+        email_confirm: true,
+        user_metadata: {
+          full_name: user.userData.full_name
+        }
       });
 
       if (authError) {
@@ -67,14 +70,16 @@ export const setupDemoUsers = async () => {
 
 // Instructions for manual setup if the above doesn't work:
 export const MANUAL_SETUP_INSTRUCTIONS = `
-To manually create demo users:
+To manually create demo users with confirmed emails:
 
 1. Go to your Supabase Dashboard -> Authentication -> Users
 2. Click "Add User" and create:
    - Email: admin@meditrack.com, Password: admin123
    - Email: superadmin@meditrack.com, Password: superadmin123
+   - IMPORTANT: Check "Auto Confirm User" checkbox for both users
 
-3. Note the User IDs and run this SQL in the SQL Editor:
+3. The profiles will be automatically created via the database trigger.
+   If they don't appear, run this SQL in the SQL Editor:
 
 UPDATE profiles SET
   full_name = 'Demo Administrator',
@@ -89,6 +94,9 @@ UPDATE profiles SET
   department = 'IT Department',
   phone = '+1-555-0102'
 WHERE email = 'superadmin@meditrack.com';
+
+CRITICAL: Make sure to check "Auto Confirm User" when creating the accounts,
+otherwise they won't be able to log in!
 `;
 
 export default setupDemoUsers;

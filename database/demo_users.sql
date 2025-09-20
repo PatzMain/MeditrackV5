@@ -10,7 +10,7 @@
 -- Demo Admin User Profile
 INSERT INTO public.profiles (id, email, full_name, role, department, phone)
 VALUES (
-  '', -- Replace with actual admin user ID
+  '00000000-0000-0000-0000-000000000001', -- Replace with actual admin user ID
   'admin@meditrack.com',
   'Demo Administrator',
   'admin',
@@ -39,15 +39,107 @@ VALUES (
   department = EXCLUDED.department,
   phone = EXCLUDED.phone;
 
--- To create the actual auth users, use the Supabase dashboard:
+-- IMPORTANT: To create demo users with confirmed emails:
+
+-- METHOD 1: Using Supabase Dashboard (Recommended)
 -- 1. Go to Authentication -> Users in your Supabase dashboard
 -- 2. Click "Add User"
 -- 3. Create users with:
---    - Email: admin@meditrack.com, Password: admin123
---    - Email: superadmin@meditrack.com, Password: superadmin123
--- 4. Note down their User IDs
--- 5. Replace the placeholder UUIDs above with the actual User IDs
--- 6. Run this SQL script
+--    - Email: admin@meditrack.com, Password: admin123, Check "Auto Confirm User"
+--    - Email: superadmin@meditrack.com, Password: superadmin123, Check "Auto Confirm User"
+-- 4. The profiles will be created automatically via the handle_new_user() trigger
 
--- Alternative: Use Supabase Auth API to create users programmatically
--- But for demo purposes, using the dashboard is simpler
+-- METHOD 2: Using SQL (Admin Access Required)
+-- If you have RLS disabled or are using service role key:
+
+-- Create confirmed auth users directly
+INSERT INTO auth.users (
+  instance_id,
+  id,
+  aud,
+  role,
+  email,
+  encrypted_password,
+  email_confirmed_at,
+  confirmation_sent_at,
+  confirmation_token,
+  recovery_sent_at,
+  recovery_token,
+  email_change_sent_at,
+  email_change,
+  email_change_confirm_status,
+  last_sign_in_at,
+  raw_app_meta_data,
+  raw_user_meta_data,
+  is_super_admin,
+  created_at,
+  updated_at,
+  phone,
+  phone_confirmed_at,
+  phone_change,
+  phone_change_token,
+  phone_change_sent_at,
+  email_change_token_new,
+  email_change_token_current,
+  email_change_confirm_status_new
+) VALUES (
+  '00000000-0000-0000-0000-000000000000',
+  gen_random_uuid(),
+  'authenticated',
+  'authenticated',
+  'admin@meditrack.com',
+  crypt('admin123', gen_salt('bf')),
+  NOW(),
+  NOW(),
+  '',
+  NULL,
+  '',
+  NULL,
+  '',
+  0,
+  NOW(),
+  '{"provider": "email", "providers": ["email"]}',
+  '{"full_name": "Demo Administrator"}',
+  FALSE,
+  NOW(),
+  NOW(),
+  NULL,
+  NULL,
+  '',
+  '',
+  NULL,
+  '',
+  '',
+  0
+), (
+  '00000000-0000-0000-0000-000000000000',
+  gen_random_uuid(),
+  'authenticated',
+  'authenticated',
+  'superadmin@meditrack.com',
+  crypt('superadmin123', gen_salt('bf')),
+  NOW(),
+  NOW(),
+  '',
+  NULL,
+  '',
+  NULL,
+  '',
+  0,
+  NOW(),
+  '{"provider": "email", "providers": ["email"]}',
+  '{"full_name": "Demo Super Administrator"}',
+  FALSE,
+  NOW(),
+  NOW(),
+  NULL,
+  NULL,
+  '',
+  '',
+  NULL,
+  '',
+  '',
+  0
+);
+
+-- The profiles will be automatically created by the handle_new_user() trigger
