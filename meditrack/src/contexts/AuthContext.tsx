@@ -108,6 +108,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           .eq('id', data.user.id)
           .single();
 
+        console.log('Profile data from database:', profile);
+
         if (profile) {
           const userData: User = {
             id: profile.id,
@@ -117,6 +119,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             department: profile.department,
             phone: profile.phone
           };
+          console.log('User data created:', userData);
           setUser(userData);
 
           // Log successful login
